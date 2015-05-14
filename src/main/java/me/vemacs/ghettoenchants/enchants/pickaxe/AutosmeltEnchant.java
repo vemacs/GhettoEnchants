@@ -29,7 +29,7 @@ public class AutosmeltEnchant extends AbstractPickEnchant {
             block.setType(Material.AIR);
             block.getWorld().dropItemNaturally(block.getLocation(),
                     new ItemStack(smeltTo.get(block.getType()), 1));
-            block.getWorld().spawn(block.getLocation(), ExperienceOrb.class).setExperience(1);
+            block.getWorld().spawn(block.getLocation(), ExperienceOrb.class).setExperience(e.getExpToDrop());
         }
     }
 
