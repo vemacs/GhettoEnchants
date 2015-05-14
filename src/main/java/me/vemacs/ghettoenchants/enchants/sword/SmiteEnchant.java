@@ -23,7 +23,7 @@ public class SmiteEnchant extends AbstractSwordEnchant {
 
     @Override
     public String getName() {
-        return "Zeus";
+        return "Wrath of Zeus";
     }
 
     @Override
