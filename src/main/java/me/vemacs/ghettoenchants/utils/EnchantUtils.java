@@ -42,7 +42,8 @@ public class EnchantUtils {
         return null;
     }
 
-    public static void incrementEnchant(Class<? extends BaseEnchant> toIncrement, ItemStack is) throws UnsupportedOperationException {
+    public static void incrementEnchant(Class<? extends BaseEnchant> toIncrement, ItemStack is)
+            throws IllegalArgumentException {
         List<BaseEnchant> elist = readEnchants(is);
         boolean exists = false;
         for (BaseEnchant e : elist)
@@ -51,7 +52,7 @@ public class EnchantUtils {
                 if (toLevel <= e.getMaxLevel()) {
                     e.setLevel(toLevel);
                 } else
-                    throw new UnsupportedOperationException("Cannot increment over max level");
+                    throw new IllegalArgumentException("Cannot increment over max level");
                 exists = true;
                 break;
             }
