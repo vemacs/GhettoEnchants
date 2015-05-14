@@ -8,6 +8,7 @@ import me.vemacs.ghettoenchants.enchants.pickaxe.DemoPickEnchant;
 import me.vemacs.ghettoenchants.enchants.pickaxe.ExplodePickEnchant;
 import me.vemacs.ghettoenchants.enchants.pickaxe.FireworkPickEnchant;
 import me.vemacs.ghettoenchants.enchants.pickaxe.LaserPickEnchant;
+import me.vemacs.ghettoenchants.enchants.sword.SmiteEnchant;
 import me.vemacs.ghettoenchants.utils.EnchantUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -29,7 +30,9 @@ public class EnchantsPlugin extends JavaPlugin {
                 .add(DemoPickEnchant.class)
                 .add(ExplodePickEnchant.class)
                 .add(LaserPickEnchant.class)
-                .add(FireworkPickEnchant.class).build();
+                .add(FireworkPickEnchant.class)
+                .add(SmiteEnchant.class)
+                .build();
         for (Class<? extends BaseEnchant> c : toRegister) {
             try {
                 BaseEnchant enc = EnchantUtils.newInstance(c);
