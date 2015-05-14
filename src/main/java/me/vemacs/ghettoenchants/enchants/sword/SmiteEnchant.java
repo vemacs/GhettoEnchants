@@ -18,6 +18,9 @@ public class SmiteEnchant extends AbstractSwordEnchant {
             LivingEntity damaged = (LivingEntity) e.getEntity();
             damaged.getWorld().strikeLightningEffect(damaged.getLocation());
             damaged.damage(e.getDamage());
+            if (random.nextInt(100) < 5 * level) {
+                damaged.setFireTicks(60);
+            }
         }
     }
 
