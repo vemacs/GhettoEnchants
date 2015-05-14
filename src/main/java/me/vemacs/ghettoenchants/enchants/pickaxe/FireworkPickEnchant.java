@@ -9,8 +9,6 @@ import org.bukkit.inventory.meta.FireworkMeta;
 import java.util.Random;
 
 public class FireworkPickEnchant extends AbstractPickEnchant {
-    private static final Random random = new Random();
-
     public FireworkPickEnchant(int level) {
         super(level);
     }

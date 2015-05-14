@@ -4,10 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Random;
+
 public abstract class BaseEnchant {
     @Getter
     @Setter
     protected int level;
+
+    protected static final Random random = new Random();
 
     public BaseEnchant(int level) {
         this.level = level;

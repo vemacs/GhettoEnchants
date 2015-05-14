@@ -3,11 +3,7 @@ package me.vemacs.ghettoenchants.enchants.sword;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import java.util.Random;
-
 public class SmiteEnchant extends AbstractSwordEnchant {
-    private static final Random random = new Random();
-
     public SmiteEnchant(int level) {
         super(level);
     }
