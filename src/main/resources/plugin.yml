@@ -1,6 +1,6 @@
 name: GhettoEnchants
 main: me.vemacs.ghettoenchants.EnchantsPlugin
-version: 1.0
+version: ${project.version}
 commands:
    incrementenchant:
         description: Increments an enchant on the held item.

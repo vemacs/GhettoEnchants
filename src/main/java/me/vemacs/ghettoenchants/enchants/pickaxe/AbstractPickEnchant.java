@@ -22,5 +22,5 @@ public abstract class AbstractPickEnchant extends BaseEnchant {
         }
     }
 
-    public abstract void perform(BlockBreakEvent paramBlockBreakEvent);
+    public abstract void perform(BlockBreakEvent e);
 }
