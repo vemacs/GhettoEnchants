@@ -1,9 +1,9 @@
 package me.vemacs.ghettoenchants.enchants.pickaxe;
 
 import com.google.common.collect.ImmutableMap;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,10 +25,11 @@ public class AutosmeltEnchant extends AbstractPickEnchant {
         if (e.isCancelled()) return;
         Block block = e.getBlock();
         if (smeltTo.containsKey(block.getType())) {
+            e.setCancelled(true);
             block.setType(Material.AIR);
             block.getWorld().dropItemNaturally(block.getLocation(),
                     new ItemStack(smeltTo.get(block.getType()), 1));
-            e.setCancelled(true);
+            block.getWorld().spawn(block.getLocation(), ExperienceOrb.class).setExperience(1);
         }
     }
 
