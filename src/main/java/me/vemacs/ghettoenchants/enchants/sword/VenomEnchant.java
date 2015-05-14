@@ -22,7 +22,7 @@ public class VenomEnchant extends AbstractSwordEnchant {
 
     @Override
     public String getName() {
-        return null;
+        return "Venom";
     }
 
     @Override
