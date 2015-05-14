@@ -1,0 +1,13 @@
+name: GhettoEnchants
+main: me.vemacs.ghettoenchantschants.EnchantsPlugin
+version: 1.0
+commands:
+   incrementenchant:
+        description: Increments an enchant on the held item.
+        aliases: [ie]
+        permission: ghettoenchants.increment
+        usage: /incrementenchant [enchant name]
+permissions:
+    ghettoenchants.increment:
+        default: op
+        description: Allows you to increment an enchant on the held item.
