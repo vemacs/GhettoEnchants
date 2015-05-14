@@ -22,6 +22,7 @@ public class AutosmeltEnchant extends AbstractPickEnchant {
 
     @Override
     public void perform(BlockBreakEvent e) {
+        if (e.isCancelled()) return;
         Block block = e.getBlock();
         if (smeltTo.containsKey(block.getType())) {
             block.setType(Material.AIR);
