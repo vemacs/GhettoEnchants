@@ -3,10 +3,7 @@ package me.vemacs.ghettoenchants;
 import com.google.common.base.Joiner;
 import lombok.Getter;
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
-import me.vemacs.ghettoenchants.enchants.pickaxe.DemoPickEnchant;
-import me.vemacs.ghettoenchants.enchants.pickaxe.ExplodePickEnchant;
-import me.vemacs.ghettoenchants.enchants.pickaxe.FireworkPickEnchant;
-import me.vemacs.ghettoenchants.enchants.pickaxe.LaserPickEnchant;
+import me.vemacs.ghettoenchants.enchants.pickaxe.*;
 import me.vemacs.ghettoenchants.enchants.sword.SmiteEnchant;
 import me.vemacs.ghettoenchants.utils.EnchantUtils;
 import org.bukkit.ChatColor;
@@ -31,7 +28,8 @@ public class EnchantsPlugin extends JavaPlugin {
                 ExplodePickEnchant.class,
                 FireworkPickEnchant.class,
                 LaserPickEnchant.class,
-                SmiteEnchant.class
+                SmiteEnchant.class,
+                AutosmeltEnchant.class
         );
         for (Class<? extends BaseEnchant> c : toRegister) {
             try {

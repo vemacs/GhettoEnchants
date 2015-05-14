@@ -6,6 +6,7 @@ import me.vemacs.ghettoenchants.utils.EnchantUtils;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -14,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import java.util.List;
 
 public class EnchantsListener implements Listener {
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
         try {
             List<BaseEnchant> elist = EnchantUtils.readEnchants(event.getPlayer().getItemInHand());
