@@ -1,6 +1,7 @@
 package me.vemacs.ghettoenchants.enchants.pickaxe;
 
 import lombok.Getter;
+import me.vemacs.ghettoenchants.EnchantsPlugin;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -35,6 +36,6 @@ public class ExplodePickEnchant extends AbstractPickEnchant {
             public void run() {
                 ExplodePickEnchant.invincible.remove(name);
             }
-        };
+        }.runTaskLater(EnchantsPlugin.getInstance(), 5);
     }
 }
