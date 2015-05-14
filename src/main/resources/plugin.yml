@@ -1,5 +1,5 @@
 name: GhettoEnchants
-main: me.vemacs.ghettoenchantschants.EnchantsPlugin
+main: me.vemacs.ghettoenchants.EnchantsPlugin
 version: 1.0
 commands:
    incrementenchant:
