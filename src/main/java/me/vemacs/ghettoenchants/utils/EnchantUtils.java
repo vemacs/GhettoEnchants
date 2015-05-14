@@ -14,13 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Not my proudest work ever
+ */
 public class EnchantUtils {
     @Getter
     private static Map<String, Class<? extends BaseEnchant>> registeredEnchants = new HashMap<>();
-
     @Getter
     private static Map<String, BaseEnchant> cachedEnchants = new HashMap<>();
-
     @Getter
     private static Map<Class, Constructor> cachedConstructors = new HashMap<>();
 
