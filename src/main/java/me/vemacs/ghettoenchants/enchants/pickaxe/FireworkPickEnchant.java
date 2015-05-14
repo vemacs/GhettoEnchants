@@ -6,8 +6,6 @@ import org.bukkit.entity.Firework;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
-import java.util.Random;
-
 public class FireworkPickEnchant extends AbstractPickEnchant {
     public FireworkPickEnchant(int level) {
         super(level);
