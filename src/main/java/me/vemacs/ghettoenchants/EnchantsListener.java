@@ -50,16 +50,4 @@ public class EnchantsListener implements Listener {
             }
         }
     }
-
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPlayerFish(PlayerFishEvent event) {
-        Player p = event.getPlayer();
-        try {
-            List<BaseEnchant> elist = EnchantUtils.readEnchants(p.getItemInHand());
-            for (BaseEnchant e : elist) {
-                e.perform(event);
-            }
-        } catch (Exception ignored) {
-        }
-    }
 }
