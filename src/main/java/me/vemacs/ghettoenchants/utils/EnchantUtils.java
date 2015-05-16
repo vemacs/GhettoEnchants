@@ -2,6 +2,7 @@ package me.vemacs.ghettoenchants.utils;
 
 import com.google.common.base.Joiner;
 import lombok.Getter;
+import me.vemacs.ghettoenchants.EnchantsPlugin;
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,9 +22,21 @@ public class EnchantUtils {
     @Getter
     private static Map<String, Class<? extends BaseEnchant>> registeredEnchants = new HashMap<>();
     @Getter
-    private static Map<String, BaseEnchant> cachedEnchants = new HashMap<>();
-    @Getter
     private static Map<Class, Constructor> cachedConstructors = new HashMap<>();
+
+    public static void registerEnchant(Class<? extends BaseEnchant> fromClass) {
+        BaseEnchant enc = newInstance(fromClass);
+        getRegisteredEnchants().put(enc.getName(), enc.getClass());
+        EnchantsPlugin.getInstance().getLogger()
+                .info("Registered enchantment " + enc.getName() + " as " + enc.getClass().getSimpleName());
+
+    }
+
+    public static void unregisterEnchant(Class<? extends BaseEnchant> fromClass) {
+        BaseEnchant enc = newInstance(fromClass);
+        cachedConstructors.remove(fromClass);
+        registeredEnchants.remove(enc.getName());
+    }
 
     public static BaseEnchant newInstance(Class<? extends BaseEnchant> fromClass) {
         return newInstance(fromClass, 1);
@@ -43,23 +56,33 @@ public class EnchantUtils {
         return null;
     }
 
-    public static void incrementEnchant(Class<? extends BaseEnchant> toIncrement, ItemStack is)
+    public static void setEnchantLevel(Class<? extends BaseEnchant> toIncrement, ItemStack is, int level)
             throws IllegalArgumentException {
         List<BaseEnchant> elist = readEnchants(is);
         boolean exists = false;
         for (BaseEnchant e : elist)
             if (e.getClass().equals(toIncrement)) {
-                int toLevel = e.getLevel() + 1;
-                if (toLevel <= e.getMaxLevel()) {
-                    e.setLevel(toLevel);
-                } else
+                if (level > e.getMaxLevel()) {
                     throw new IllegalArgumentException("Cannot increment over max level");
+                }
+                e.setLevel(level);
                 exists = true;
                 break;
             }
         if (!exists)
-            elist.add(newInstance(toIncrement, 1));
+            elist.add(newInstance(toIncrement, level));
         writeEnchants(elist, is);
+    }
+
+    public static int getEnchantLevel(Class<? extends BaseEnchant> toIncrement, ItemStack is)
+            throws IllegalArgumentException {
+        List<BaseEnchant> elist = readEnchants(is);
+        for (BaseEnchant e : elist) {
+            if (e.getClass().equals(toIncrement)) {
+                return e.getLevel();
+            }
+        }
+        return 0;
     }
 
     public static List<BaseEnchant> readEnchants(ItemStack is) {
@@ -81,15 +104,12 @@ public class EnchantUtils {
     }
 
     public static BaseEnchant getEnchant(String enchantString) {
-        if (cachedEnchants.containsKey(enchantString))
-            return cachedEnchants.get(enchantString);
         String[] parts = enchantString.split(" ");
         int level = RomanNumerals.intFromRomanString(parts[(parts.length - 1)]);
         parts[(parts.length - 1)] = null;
         BaseEnchant enchant;
         enchant = newInstance(registeredEnchants.get(Joiner.on(" ").skipNulls()
                 .join(parts)), level);
-        cachedEnchants.put(enchantString, enchant);
         return enchant;
     }
 }

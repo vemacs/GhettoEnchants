@@ -2,12 +2,12 @@ name: GhettoEnchants
 main: me.vemacs.ghettoenchants.EnchantsPlugin
 version: ${project.version}
 commands:
-   incrementenchant:
-        description: Increments an enchant on the held item.
-        aliases: [ie]
-        permission: ghettoenchants.increment
-        usage: /incrementenchant [enchant name]
+   giveenchanteditem:
+        description: Gives a player an item with the applied enchants
+        aliases: [gei]
+        permission: ghettoenchants.admin
+        usage: /giveenchanteditem [player] [material] [enchant1:2,enchant2:3]
 permissions:
-    ghettoenchants.increment:
+    ghettoenchants.admin:
         default: op
-        description: Allows you to increment an enchant on the held item.
+        description: Admin permissions for this plugin.

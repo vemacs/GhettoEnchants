@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerFishEvent;
 
 import java.util.List;
 
@@ -47,6 +48,18 @@ public class EnchantsListener implements Listener {
                 }
             } catch (Exception ignored) {
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPlayerFish(PlayerFishEvent event) {
+        Player p = event.getPlayer();
+        try {
+            List<BaseEnchant> elist = EnchantUtils.readEnchants(p.getItemInHand());
+            for (BaseEnchant e : elist) {
+                e.perform(event);
+            }
+        } catch (Exception ignored) {
         }
     }
 }
