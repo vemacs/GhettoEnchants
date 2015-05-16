@@ -4,7 +4,7 @@ import lombok.Getter;
 import me.vemacs.ghettoenchants.commands.GiveEnchantedItemCommand;
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
 import me.vemacs.ghettoenchants.enchants.pickaxe.*;
-import me.vemacs.ghettoenchants.enchants.sword.SmiteEnchant;
+import me.vemacs.ghettoenchants.enchants.sword.*;
 import me.vemacs.ghettoenchants.utils.EnchantUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,7 +24,8 @@ public class EnchantsPlugin extends JavaPlugin {
                 FireworkPickEnchant.class,
                 LaserPickEnchant.class,
                 AutosmeltEnchant.class,
-                SmiteEnchant.class
+                SmiteEnchant.class,
+                VenomEnchant.class
         );
         for (Class<? extends BaseEnchant> c : toRegister) {
             try {
