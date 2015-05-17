@@ -20,29 +20,28 @@ import java.util.Map;
  */
 public class EnchantUtils {
     @Getter
-    private static Map<String, Class<? extends BaseEnchant>> registeredEnchants = new HashMap<>();
+    private Map<String, Class<? extends BaseEnchant>> registeredEnchants = new HashMap<>();
     @Getter
     private static Map<Class, Constructor> cachedConstructors = new HashMap<>();
 
-    public static void registerEnchant(Class<? extends BaseEnchant> fromClass) {
+    public void registerEnchant(Class<? extends BaseEnchant> fromClass) {
         BaseEnchant enc = newInstance(fromClass);
         getRegisteredEnchants().put(enc.getName(), enc.getClass());
         EnchantsPlugin.getInstance().getLogger()
                 .info("Registered enchantment " + enc.getName() + " as " + enc.getClass().getSimpleName());
-
     }
 
-    public static void unregisterEnchant(Class<? extends BaseEnchant> fromClass) {
+    public void unregisterEnchant(Class<? extends BaseEnchant> fromClass) {
         BaseEnchant enc = newInstance(fromClass);
         cachedConstructors.remove(fromClass);
         registeredEnchants.remove(enc.getName());
     }
 
-    public static BaseEnchant newInstance(Class<? extends BaseEnchant> fromClass) {
+    public BaseEnchant newInstance(Class<? extends BaseEnchant> fromClass) {
         return newInstance(fromClass, 1);
     }
 
-    public static BaseEnchant newInstance(Class<? extends BaseEnchant> fromClass, int level) {
+    public BaseEnchant newInstance(Class<? extends BaseEnchant> fromClass, int level) {
         try {
             if (!cachedConstructors.containsKey(fromClass)) {
                 Constructor constructor = fromClass.getDeclaredConstructor(Integer.TYPE);
@@ -56,7 +55,7 @@ public class EnchantUtils {
         return null;
     }
 
-    public static void setEnchantLevel(Class<? extends BaseEnchant> toIncrement, ItemStack is, int level)
+    public void setEnchantLevel(Class<? extends BaseEnchant> toIncrement, ItemStack is, int level)
             throws IllegalArgumentException {
         List<BaseEnchant> elist = readEnchants(is);
         boolean exists = false;
@@ -74,7 +73,7 @@ public class EnchantUtils {
         writeEnchants(elist, is);
     }
 
-    public static int getEnchantLevel(Class<? extends BaseEnchant> toIncrement, ItemStack is)
+    public int getEnchantLevel(Class<? extends BaseEnchant> toIncrement, ItemStack is)
             throws IllegalArgumentException {
         List<BaseEnchant> elist = readEnchants(is);
         for (BaseEnchant e : elist) {
@@ -85,7 +84,7 @@ public class EnchantUtils {
         return 0;
     }
 
-    public static List<BaseEnchant> readEnchants(ItemStack is) {
+    public List<BaseEnchant> readEnchants(ItemStack is) {
         List<BaseEnchant> elist = new ArrayList<>();
         if ((is.getItemMeta() == null) || (is.getItemMeta().getLore() == null))
             return elist;
@@ -94,7 +93,7 @@ public class EnchantUtils {
         return elist;
     }
 
-    public static void writeEnchants(List<BaseEnchant> elist, ItemStack is) {
+    public void writeEnchants(List<BaseEnchant> elist, ItemStack is) {
         ItemMeta meta = is.hasItemMeta() ? is.getItemMeta() : Bukkit.getItemFactory().getItemMeta(is.getType());
         List<String> comp = new ArrayList<>();
         for (BaseEnchant e : elist)
@@ -103,7 +102,7 @@ public class EnchantUtils {
         is.setItemMeta(meta);
     }
 
-    public static BaseEnchant getEnchant(String enchantString) {
+    public BaseEnchant getEnchant(String enchantString) {
         String[] parts = enchantString.split(" ");
         int level = RomanNumerals.intFromRomanString(parts[(parts.length - 1)]);
         parts[(parts.length - 1)] = null;

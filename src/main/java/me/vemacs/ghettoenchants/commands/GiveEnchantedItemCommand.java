@@ -11,10 +11,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class GiveEnchantedItemCommand implements CommandExecutor {
+    private EnchantParser parser;
+
+    public GiveEnchantedItemCommand() {
+        parser = new EnchantParser();
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        EnchantParser parser = new EnchantParser();
         if (args.length < 3) return false;
         Player p = Bukkit.getPlayerExact(args[0]);
         if (p == null) {

@@ -7,13 +7,14 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class EnchantParser {
+    private EnchantUtils utils;
     private Map<String, String> addSpaces = new HashMap<>();
 
     public EnchantParser() {
-        for (String str : EnchantUtils.getRegisteredEnchants().keySet()) {
+        utils = EnchantsPlugin.getUtils();
+        for (String str : utils.getRegisteredEnchants().keySet()) {
             addSpaces.put(str.replace(" ", "").toLowerCase(), str);
         }
     }
@@ -56,8 +57,8 @@ public class EnchantParser {
         } catch (Exception e) {
             throw new IllegalArgumentException("Invalid level: " + parts[1]);
         }
-        Class<? extends BaseEnchant> fromClass = EnchantUtils.getRegisteredEnchants().get(encName);
-        EnchantUtils.setEnchantLevel(fromClass, is, level);
+        Class<? extends BaseEnchant> fromClass = utils.getRegisteredEnchants().get(encName);
+        utils.setEnchantLevel(fromClass, is, level);
     }
 
     public void applyVanillaEnchant(String str, ItemStack is) throws IllegalArgumentException {

@@ -16,10 +16,16 @@ import org.bukkit.event.player.PlayerFishEvent;
 import java.util.List;
 
 public class EnchantsListener implements Listener {
+    private EnchantUtils utils;
+
+    public EnchantsListener() {
+        utils = EnchantsPlugin.getUtils();
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         try {
-            List<BaseEnchant> elist = EnchantUtils.readEnchants(event.getPlayer().getItemInHand());
+            List<BaseEnchant> elist = utils.readEnchants(event.getPlayer().getItemInHand());
             for (BaseEnchant e : elist) {
                 e.perform(event);
             }
@@ -42,7 +48,7 @@ public class EnchantsListener implements Listener {
         if (event.getDamager() instanceof Player && event.getEntity() instanceof LivingEntity) {
             Player p = (Player) event.getDamager();
             try {
-                List<BaseEnchant> elist = EnchantUtils.readEnchants(p.getItemInHand());
+                List<BaseEnchant> elist = utils.readEnchants(p.getItemInHand());
                 for (BaseEnchant e : elist) {
                     e.perform(event);
                 }
