@@ -1,4 +1,4 @@
-package me.vemacs.ghettoenchants.enchants.pickaxe;
+package me.vemacs.ghettoenchants.enchants.tools.pickaxe;
 
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
 import org.bukkit.event.Event;

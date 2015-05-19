@@ -1,4 +1,4 @@
-package me.vemacs.ghettoenchants.enchants.sword;
+package me.vemacs.ghettoenchants.enchants.tools.sword;
 
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
 import org.bukkit.event.Event;

@@ -3,9 +3,9 @@ package me.vemacs.ghettoenchants;
 import lombok.Getter;
 import me.vemacs.ghettoenchants.commands.GiveEnchantedItemCommand;
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
-import me.vemacs.ghettoenchants.enchants.pickaxe.*;
-import me.vemacs.ghettoenchants.enchants.sword.SmiteEnchant;
-import me.vemacs.ghettoenchants.enchants.sword.VenomEnchant;
+import me.vemacs.ghettoenchants.enchants.armor.JumpPotionEnchant;
+import me.vemacs.ghettoenchants.enchants.tools.pickaxe.*;
+import me.vemacs.ghettoenchants.enchants.tools.sword.VenomEnchant;
 import me.vemacs.ghettoenchants.utils.EnchantUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,16 +21,19 @@ public class EnchantsPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        utils = new EnchantUtils();
+        getCommand("giveenchanteditem").setExecutor(new GiveEnchantedItemCommand());
+        getServer().getPluginManager().registerEvents(new EnchantsListener(), this);
+        new AmbientEventTask().runTaskTimer(this, 0, 10);
+        if (!getConfig().getBoolean("enable-samples")) return;
         List<Class<? extends BaseEnchant>> toRegister = Arrays.asList(
                 DemoPickEnchant.class,
                 ExplodePickEnchant.class,
                 FireworkPickEnchant.class,
-                LaserPickEnchant.class,
-                SmiteEnchant.class,
                 AutosmeltEnchant.class,
-                VenomEnchant.class
+                VenomEnchant.class,
+                JumpPotionEnchant.class
         );
-        utils = new EnchantUtils();
         for (Class<? extends BaseEnchant> c : toRegister) {
             try {
                 utils.registerEnchant(c);
@@ -38,7 +41,5 @@ public class EnchantsPlugin extends JavaPlugin {
                 e.printStackTrace();
             }
         }
-        getCommand("giveenchanteditem").setExecutor(new GiveEnchantedItemCommand());
-        getServer().getPluginManager().registerEvents(new EnchantsListener(), this);
     }
 }

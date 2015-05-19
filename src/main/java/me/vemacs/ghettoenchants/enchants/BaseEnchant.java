@@ -28,4 +28,17 @@ public abstract class BaseEnchant {
     public abstract boolean canEnchant(ItemStack paramItemStack);
 
     public abstract void perform(org.bukkit.event.Event paramEvent);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseEnchant that = (BaseEnchant) o;
+        return getName().equals(that.getName()) && level == that.getLevel();
+    }
+
+    @Override
+    public int hashCode() {
+        return (getName() + level).hashCode();
+    }
 }

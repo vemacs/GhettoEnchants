@@ -1,7 +1,6 @@
-package me.vemacs.ghettoenchants.enchants.pickaxe;
+package me.vemacs.ghettoenchants.enchants.tools.pickaxe;
 
 import com.google.common.collect.ImmutableMap;
-import me.vemacs.ghettoenchants.EnchantsPlugin;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ExperienceOrb;

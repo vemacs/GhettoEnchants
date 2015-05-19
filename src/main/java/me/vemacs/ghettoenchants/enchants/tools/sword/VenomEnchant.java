@@ -1,4 +1,4 @@
-package me.vemacs.ghettoenchants.enchants.sword;
+package me.vemacs.ghettoenchants.enchants.tools.sword;
 
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -14,7 +14,7 @@ public class VenomEnchant extends AbstractSwordEnchant {
 
     @Override
     public void perform(EntityDamageByEntityEvent e) {
-        if (random.nextInt(100) < 4 * level) {
+        if (random.nextInt(100) < 2 * level) {
             LivingEntity entity = (LivingEntity) e.getEntity();
             entity.addPotionEffect(poisonEffect);
         }

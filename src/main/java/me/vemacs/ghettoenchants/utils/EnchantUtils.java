@@ -55,12 +55,16 @@ public class EnchantUtils {
         return null;
     }
 
-    public void setEnchantLevel(Class<? extends BaseEnchant> toIncrement, ItemStack is, int level)
+    public void setEnchantLevel(Class<? extends BaseEnchant> enchant, ItemStack is, int level)
             throws IllegalArgumentException {
         List<BaseEnchant> elist = readEnchants(is);
         boolean exists = false;
         for (BaseEnchant e : elist)
-            if (e.getClass().equals(toIncrement)) {
+            if (e.getClass().equals(enchant)) {
+                if (!e.canEnchant(is)) {
+                    throw new IllegalArgumentException(enchant.getName() +
+                        " is not applicable to " + is.getType().toString());
+                }
                 if (level > e.getMaxLevel()) {
                     throw new IllegalArgumentException("Cannot increment over max level");
                 }
@@ -69,15 +73,15 @@ public class EnchantUtils {
                 break;
             }
         if (!exists)
-            elist.add(newInstance(toIncrement, level));
+            elist.add(newInstance(enchant, level));
         writeEnchants(elist, is);
     }
 
-    public int getEnchantLevel(Class<? extends BaseEnchant> toIncrement, ItemStack is)
+    public int getEnchantLevel(Class<? extends BaseEnchant> enchant, ItemStack is)
             throws IllegalArgumentException {
         List<BaseEnchant> elist = readEnchants(is);
         for (BaseEnchant e : elist) {
-            if (e.getClass().equals(toIncrement)) {
+            if (e.getClass().equals(enchant)) {
                 return e.getLevel();
             }
         }
@@ -88,8 +92,17 @@ public class EnchantUtils {
         List<BaseEnchant> elist = new ArrayList<>();
         if ((is.getItemMeta() == null) || (is.getItemMeta().getLore() == null))
             return elist;
-        for (String estr : is.getItemMeta().getLore())
-            elist.add(getEnchant(ChatColor.stripColor(estr)));
+        for (String estr : is.getItemMeta().getLore()) {
+            String stripped = ChatColor.stripColor(estr);
+            try {
+                elist.add(getEnchant(stripped));
+            } catch (IllegalArgumentException e) {
+                EnchantsPlugin.getInstance().getLogger().warning(
+                        String.format("Invalid enchant for ItemStack of type %s: %s",
+                                is.getType().toString(), stripped)
+                );
+            }
+        }
         return elist;
     }
 
@@ -102,13 +115,14 @@ public class EnchantUtils {
         is.setItemMeta(meta);
     }
 
-    public BaseEnchant getEnchant(String enchantString) {
+    public BaseEnchant getEnchant(String enchantString) throws IllegalArgumentException {
         String[] parts = enchantString.split(" ");
         int level = RomanNumerals.intFromRomanString(parts[(parts.length - 1)]);
         parts[(parts.length - 1)] = null;
-        BaseEnchant enchant;
-        enchant = newInstance(registeredEnchants.get(Joiner.on(" ").skipNulls()
-                .join(parts)), level);
-        return enchant;
+        String name = Joiner.on(" ").skipNulls().join(parts);
+        if (!registeredEnchants.containsKey(name)) {
+            throw new IllegalArgumentException("Invalid enchant name: " + name);
+        }
+        return newInstance(registeredEnchants.get(name), level);
     }
 }

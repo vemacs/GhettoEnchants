@@ -29,7 +29,6 @@ public class GiveEnchantedItemCommand implements CommandExecutor {
         try {
             type = Material.valueOf(args[1].toUpperCase());
         } catch (IllegalArgumentException e) {
-
             sender.sendMessage(ChatColor.RED + e.getMessage());
             return true;
         }
@@ -42,7 +41,7 @@ public class GiveEnchantedItemCommand implements CommandExecutor {
             return true;
         }
         p.getInventory().addItem(is);
-        sender.sendMessage(ChatColor.GREEN + "Item delivered");
+        sender.sendMessage(ChatColor.GREEN + "The " + type + " has been delivered to " + p.getName());
         return true;
     }
 }

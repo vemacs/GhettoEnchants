@@ -1,4 +1,4 @@
-package me.vemacs.ghettoenchants.enchants.pickaxe;
+package me.vemacs.ghettoenchants.enchants.tools.pickaxe;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
