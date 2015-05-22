@@ -1,25 +1,22 @@
 package me.vemacs.ghettoenchants;
 
-import me.vemacs.ghettoenchants.enchants.BaseEnchant;
-import me.vemacs.ghettoenchants.enchants.armor.AbstractAmbientEnchant;
-import me.vemacs.ghettoenchants.utils.EnchantUtils;
+import me.vemacs.ghettoenchants.event.ArmorRemovedEvent;
+import me.vemacs.ghettoenchants.event.ArmorWornEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
 public class AmbientEventTask extends BukkitRunnable {
-    private Map<UUID, Set<AbstractAmbientEnchant>> previous = new HashMap<>();
-    private static EnchantUtils utils;
-
-    public AmbientEventTask() {
-        utils = EnchantsPlugin.getUtils();
-    }
+    private Map<UUID, List<ItemStack>> previous = new HashMap<>();
 
     @Override
     public void run() {
+        PluginManager pm = Bukkit.getPluginManager();
         Set<UUID> currentOnlineUuids = new HashSet<>();
         for (Player p : Bukkit.getOnlinePlayers()) {
             currentOnlineUuids.add(p.getUniqueId());
@@ -30,38 +27,27 @@ public class AmbientEventTask extends BukkitRunnable {
             previous.remove(uuid);
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
-            Set<AbstractAmbientEnchant> current = new HashSet<>();
-            ItemStack[] armor = p.getInventory().getArmorContents();
-            for (ItemStack is : armor) {
-                try {
-                    List<BaseEnchant> beList = utils.readEnchants(is);
-                    for (BaseEnchant be : beList) {
-                        if (be instanceof AbstractAmbientEnchant) {
-                            current.add((AbstractAmbientEnchant) be);
-                        }
-                    }
-                } catch (Exception e) {
-                    EnchantsPlugin.getInstance().getLogger().warning(
-                            "Exception caught in ambient task with message " + e.getMessage()
-                    );
-                }
+            List<ItemStack> current = new ArrayList<>();
+            for (ItemStack is : p.getInventory().getArmorContents()) {
+                if (is == null) is = new ItemStack(Material.AIR);
+                current.add(is);
             }
             UUID uuid = p.getUniqueId();
             if (previous.containsKey(uuid)) {
-                Set<AbstractAmbientEnchant> previousSet = previous.get(uuid);
-                for (AbstractAmbientEnchant ench : current) {
-                    if (!previousSet.contains(ench)) {
-                        ench.armorWorn(p);
+                List<ItemStack> previousSet = previous.get(uuid);
+                for (ItemStack stack : current) {
+                    if (!previousSet.contains(stack)) {
+                        pm.callEvent(new ArmorWornEvent(p, stack));
                     }
                 }
-                for (AbstractAmbientEnchant ench : previousSet) {
-                    if (!current.contains(ench)) {
-                        ench.armorRemoved(p);
+                for (ItemStack stack : previousSet) {
+                    if (!current.contains(stack)) {
+                        pm.callEvent(new ArmorRemovedEvent(p, stack));
                     }
                 }
             } else {
-                for (AbstractAmbientEnchant ench : current) {
-                    ench.armorWorn(p);
+                for (ItemStack stack : current) {
+                    pm.callEvent(new ArmorWornEvent(p, stack));
                 }
             }
             previous.put(uuid, current);

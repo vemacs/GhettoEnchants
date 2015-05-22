@@ -30,9 +30,4 @@ public class JumpPotionEnchant extends AbstractAmbientEnchant {
     public int getMaxLevel() {
         return 5;
     }
-
-    @Override
-    public void perform(Event paramEvent) {
-        // ignored
-    }
 }

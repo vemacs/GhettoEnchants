@@ -1,7 +1,10 @@
 package me.vemacs.ghettoenchants.enchants.armor;
 
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
+import me.vemacs.ghettoenchants.event.ArmorRemovedEvent;
+import me.vemacs.ghettoenchants.event.ArmorWornEvent;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -27,6 +30,15 @@ public abstract class AbstractAmbientEnchant extends BaseEnchant {
             }
         }
         return false;
+    }
+
+    @Override
+    public void perform(Event event) {
+        if (event instanceof ArmorWornEvent) {
+            armorWorn(((ArmorWornEvent) event).getPlayer());
+        } else if (event instanceof ArmorRemovedEvent) {
+            armorRemoved(((ArmorRemovedEvent) event).getPlayer());
+        }
     }
 
     public abstract void armorWorn(Player player);
