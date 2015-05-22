@@ -6,6 +6,7 @@ import me.vemacs.ghettoenchants.EnchantsPlugin;
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -124,5 +125,18 @@ public class EnchantUtils {
             throw new IllegalArgumentException("Invalid enchant name: " + name);
         }
         return newInstance(registeredEnchants.get(name), level);
+    }
+
+    public void performEnchants(Event event, ItemStack... items) {
+        try {
+            List<BaseEnchant> elist = new ArrayList<>();
+            for (ItemStack is : items) {
+                elist.addAll(readEnchants(is));
+            }
+            for (BaseEnchant e : elist) {
+                e.perform(event);
+            }
+        } catch (Exception ignored) {
+        }
     }
 }

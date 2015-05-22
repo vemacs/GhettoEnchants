@@ -1,6 +1,8 @@
 ## GhettoEnchants
 Being dissatisfied with the current state of public APIs for custom enchantments (EnchantmentAPI comes to mind), I decided to write my own for my own server. This API allows developers to easily implement event-based enchants for tools and armor, and "ambient" enchants for armor. It supports dynamic enchant registration, uses lore for storage, provides sample enchant implementations, and provides a command to deliver items with vanilla and custom enchants to players. I would like to enable support for hooking into enchantment tables in the future.
 
+Unlike EnchantmentAPI, GhettoEnchants makes it easy to hook any event (or any method, really) into any ItemStack. Simply get an instance of EnchantUtils and run `performEnchants(Event event, ItemStack... items)` after registering enchants that handle that event.
+
 ### API usage
 Put it in your build path. I'm currently looking into getting this into a public Maven repo. See sample implementations and main class for enchant registration.
 

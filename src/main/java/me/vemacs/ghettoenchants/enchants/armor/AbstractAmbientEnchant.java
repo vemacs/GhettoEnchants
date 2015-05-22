@@ -10,6 +10,14 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Unlike tool enchants, multiple pieces of worn armor can have the same enchants.
+ * No stacking behavior is implemented. An implementation of this class with stacking
+ * enchants is in the works.
+ * No singleton enchant behavior is implemented either (that was the behavior
+ * pre-event-refactor). I felt that behavior was too inflexible, but a reimplementation
+ * is in the works.
+ */
 public abstract class AbstractAmbientEnchant extends BaseEnchant {
     private static final List<String> validMatches = Arrays.asList(
             "_HELMET",
