@@ -24,18 +24,22 @@ public class EnchantUtils {
     private Map<String, Class<? extends BaseEnchant>> registeredEnchants = new HashMap<>();
     @Getter
     private static Map<Class, Constructor> cachedConstructors = new HashMap<>();
+    @Getter
+    private EnchantParser parser = new EnchantParser(this);
 
     public void registerEnchant(Class<? extends BaseEnchant> fromClass) {
         BaseEnchant enc = newInstance(fromClass);
         getRegisteredEnchants().put(enc.getName(), enc.getClass());
         EnchantsPlugin.getInstance().getLogger()
                 .info("Registered enchantment " + enc.getName() + " as " + enc.getClass().getSimpleName());
+        parser.updateNameMap();
     }
 
     public void unregisterEnchant(Class<? extends BaseEnchant> fromClass) {
         BaseEnchant enc = newInstance(fromClass);
         cachedConstructors.remove(fromClass);
         registeredEnchants.remove(enc.getName());
+        parser.updateNameMap();
     }
 
     public BaseEnchant newInstance(Class<? extends BaseEnchant> fromClass) {

@@ -1,6 +1,8 @@
 package me.vemacs.ghettoenchants.commands;
 
+import me.vemacs.ghettoenchants.EnchantsPlugin;
 import me.vemacs.ghettoenchants.utils.EnchantParser;
+import me.vemacs.ghettoenchants.utils.EnchantUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -11,10 +13,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class GiveEnchantedItemCommand implements CommandExecutor {
-    private EnchantParser parser;
+    private EnchantUtils utils;
 
     public GiveEnchantedItemCommand() {
-        parser = new EnchantParser();
+        utils = EnchantsPlugin.getUtils();
     }
 
     @Override
@@ -35,7 +37,7 @@ public class GiveEnchantedItemCommand implements CommandExecutor {
         ItemStack is;
         try {
             is = new ItemStack(type, 1);
-            parser.applyAllEnchants(args[2], is);
+            utils.getParser().applyAllEnchants(args[2], is);
         } catch (IllegalArgumentException e) {
             sender.sendMessage(ChatColor.RED + e.getMessage());
             return true;

@@ -1,6 +1,6 @@
 package me.vemacs.ghettoenchants.utils;
 
-import me.vemacs.ghettoenchants.EnchantsPlugin;
+import lombok.Getter;
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -10,17 +10,18 @@ import java.util.Map;
 
 public class EnchantParser {
     private EnchantUtils utils;
+    @Getter
+    private Map<String, String> nameMap = new HashMap<>();
 
-    public EnchantParser() {
-        utils = EnchantsPlugin.getUtils();
+    public EnchantParser(EnchantUtils utils) {
+        this.utils = utils;
     }
 
-    private Map<String, String> getSimpleToFull() {
-        Map<String, String> addSpaces = new HashMap<>();
+    public void updateNameMap() {
+        nameMap.clear();
         for (String str : utils.getRegisteredEnchants().keySet()) {
-            addSpaces.put(str.replace(" ", "").toLowerCase(), str);
+            nameMap.put(str.replace(" ", "").toLowerCase(), str);
         }
-        return addSpaces;
     }
 
     public void applyAllEnchants(String enchStr, ItemStack is) throws IllegalArgumentException {
@@ -49,11 +50,10 @@ public class EnchantParser {
     public void applyGhettoEnchant(String str, ItemStack is) throws IllegalArgumentException {
         String[] parts = str.split(":");
         String encName;
-        Map<String, String> addSpaces = getSimpleToFull();
-        if (!addSpaces.containsKey(parts[0])) {
+        if (!nameMap.containsKey(parts[0])) {
             throw new IllegalArgumentException("Invalid enchant name: " + parts[0]);
         }
-        encName = addSpaces.get(parts[0]);
+        encName = nameMap.get(parts[0]);
         int level;
         try {
             level = Integer.parseInt(parts[1]);

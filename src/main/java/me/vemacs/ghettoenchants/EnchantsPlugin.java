@@ -2,6 +2,7 @@ package me.vemacs.ghettoenchants;
 
 import lombok.Getter;
 import me.vemacs.ghettoenchants.commands.GiveEnchantedItemCommand;
+import me.vemacs.ghettoenchants.commands.ListEnchantmentsCommand;
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
 import me.vemacs.ghettoenchants.enchants.armor.JumpPotionEnchant;
 import me.vemacs.ghettoenchants.enchants.tools.pickaxe.*;
@@ -23,6 +24,7 @@ public class EnchantsPlugin extends JavaPlugin {
         instance = this;
         utils = new EnchantUtils();
         getCommand("giveenchanteditem").setExecutor(new GiveEnchantedItemCommand());
+        getCommand("listenchantments").setExecutor(new ListEnchantmentsCommand());
         getServer().getPluginManager().registerEvents(new EnchantsListener(), this);
         new AmbientEventTask().runTaskTimer(this, 0, 10);
         if (!getConfig().getBoolean("enable-samples")) return;

@@ -6,7 +6,12 @@ commands:
         description: Gives a player an item with the applied enchants
         aliases: [gei]
         permission: ghettoenchants.admin
-        usage: /giveenchanteditem [player] [material] [enchant1:2,enchant2:3]
+        usage: /giveenchanteditem|gei [player] [material] [enchant1:2,enchant2:3]
+   listenchantments:
+        description: Lists the registered ghetto enchantments
+        aliases: [listench]
+        permission: ghettoenchants.admin
+        usage: /listenchantments|listench
 permissions:
     ghettoenchants.admin:
         default: op
