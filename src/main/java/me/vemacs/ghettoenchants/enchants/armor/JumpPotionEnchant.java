@@ -12,7 +12,7 @@ public class JumpPotionEnchant extends AbstractAmbientEnchant {
 
     @Override
     public void armorWorn(Player player) {
-        PotionEffect potion = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, level - 1);
+        PotionEffect potion = new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, level - 1, true, false);
         player.addPotionEffect(potion);
     }
 
