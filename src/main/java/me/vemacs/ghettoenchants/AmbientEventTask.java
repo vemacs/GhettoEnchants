@@ -29,8 +29,9 @@ public class AmbientEventTask extends BukkitRunnable {
         for (Player p : Bukkit.getOnlinePlayers()) {
             List<ItemStack> current = new ArrayList<>();
             for (ItemStack is : p.getInventory().getArmorContents()) {
-                if (is == null) is = new ItemStack(Material.AIR);
-                current.add(is);
+                if (is != null && is.getType() != Material.AIR) {
+                    current.add(is);
+                }
             }
             UUID uuid = p.getUniqueId();
             if (previous.containsKey(uuid)) {
