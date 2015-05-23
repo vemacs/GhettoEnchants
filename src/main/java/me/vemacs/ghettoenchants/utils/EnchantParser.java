@@ -10,13 +10,17 @@ import java.util.Map;
 
 public class EnchantParser {
     private EnchantUtils utils;
-    private Map<String, String> addSpaces = new HashMap<>();
 
     public EnchantParser() {
         utils = EnchantsPlugin.getUtils();
+    }
+
+    private Map<String, String> getSimpleToFull() {
+        Map<String, String> addSpaces = new HashMap<>();
         for (String str : utils.getRegisteredEnchants().keySet()) {
             addSpaces.put(str.replace(" ", "").toLowerCase(), str);
         }
+        return addSpaces;
     }
 
     public void applyAllEnchants(String enchStr, ItemStack is) throws IllegalArgumentException {
@@ -32,13 +36,11 @@ public class EnchantParser {
             applyGhettoEnchant(str, is);
             success = true;
         } catch (IllegalArgumentException ignored) {
-
         }
         try {
             applyVanillaEnchant(str, is);
             success = true;
         } catch (IllegalArgumentException ignored) {
-
         }
         if (!success)
             throw new IllegalArgumentException("Invalid enchant string: " + str);
@@ -47,6 +49,7 @@ public class EnchantParser {
     public void applyGhettoEnchant(String str, ItemStack is) throws IllegalArgumentException {
         String[] parts = str.split(":");
         String encName;
+        Map<String, String> addSpaces = getSimpleToFull();
         if (!addSpaces.containsKey(parts[0])) {
             throw new IllegalArgumentException("Invalid enchant name: " + parts[0]);
         }
