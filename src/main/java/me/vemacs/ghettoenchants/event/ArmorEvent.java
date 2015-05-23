@@ -7,7 +7,6 @@ import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class ArmorEvent extends PlayerEvent {
-    private static final HandlerList handlers = new HandlerList();
     @Getter
     private final ItemStack itemStack;
     @Getter
@@ -26,10 +25,5 @@ public abstract class ArmorEvent extends PlayerEvent {
         } else {
             armorIndex = 0;
         }
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
     }
 }
