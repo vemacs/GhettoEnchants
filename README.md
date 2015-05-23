@@ -25,6 +25,7 @@ Unless you want to use the provided samples, you need to get a plugin that hooks
 /giveenchanteditem|gei
 * Permission (default op): ghettoenchants.admin
 * Usage example: /gei vemacs diamond_pickaxe autosmelt:1,eff:3
+
 /listenchantments|listench
 * Permission (default op): ghettoenchants.admin
 
