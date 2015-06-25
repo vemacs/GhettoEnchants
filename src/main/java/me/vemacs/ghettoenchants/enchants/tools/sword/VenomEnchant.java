@@ -27,6 +27,6 @@ public class VenomEnchant extends AbstractSwordEnchant {
 
     @Override
     public int getMaxLevel() {
-        return 0;
+        return 5;
     }
 }
