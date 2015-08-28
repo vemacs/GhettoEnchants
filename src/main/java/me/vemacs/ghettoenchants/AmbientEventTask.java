@@ -17,14 +17,12 @@ public class AmbientEventTask extends BukkitRunnable {
     @Override
     public void run() {
         PluginManager pm = Bukkit.getPluginManager();
-        Set<UUID> currentOnlineUuids = new HashSet<>();
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            currentOnlineUuids.add(p.getUniqueId());
-        }
-        Set<UUID> toRemove = new HashSet<>(previous.keySet());
-        toRemove.removeAll(currentOnlineUuids);
-        for (UUID uuid : toRemove) {
-            previous.remove(uuid);
+        Iterator<Map.Entry<UUID, List<ItemStack>>> itr = previous.entrySet().iterator();
+        while (itr.hasNext()) {
+            Map.Entry<UUID, List<ItemStack>> entry = itr.next();
+            if (Bukkit.getPlayer(entry.getKey()) == null) {
+                itr.remove();
+            }
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
             List<ItemStack> current = new ArrayList<>();
