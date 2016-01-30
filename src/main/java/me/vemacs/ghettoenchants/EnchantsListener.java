@@ -12,7 +12,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class EnchantsListener implements Listener {
     private EnchantUtils utils;
@@ -65,5 +67,16 @@ public class EnchantsListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onArmorRemoved(ArmorRemovedEvent event) {
         utils.performEnchants(event, event.getItemStack());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        for (ItemStack armorItem : event.getEntity().getInventory().getArmorContents()) {
+            utils.performArmorEnchants(event, event.getEntity(), armorItem);
+        }
+        Player killer = event.getEntity().getKiller();
+        if (killer != null) {
+            utils.performArmorEnchants(event, killer);
+        }
     }
 }

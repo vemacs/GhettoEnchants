@@ -4,8 +4,10 @@ import com.google.common.base.Joiner;
 import lombok.Getter;
 import me.vemacs.ghettoenchants.EnchantsPlugin;
 import me.vemacs.ghettoenchants.enchants.BaseEnchant;
+import me.vemacs.ghettoenchants.enchants.armor.WornArmorEnchant;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -139,6 +141,25 @@ public class EnchantUtils {
             }
             for (BaseEnchant e : elist) {
                 e.perform(event);
+            }
+        } catch (Exception ignored) {
+        }
+    }
+
+    public void performArmorEnchants(Event event, Player wearer) {
+        performArmorEnchants(event, wearer, wearer.getInventory().getArmorContents());
+    }
+
+    public void performArmorEnchants(Event event, Player wearer, ItemStack... contents) {
+        try {
+            List<BaseEnchant> elist = new ArrayList<>();
+            for (ItemStack is : contents) {
+                elist.addAll(EnchantsPlugin.getUtils().readEnchants(is));
+            }
+            for (BaseEnchant e : elist) {
+                if (e instanceof WornArmorEnchant) {
+                    ((WornArmorEnchant) e).perform(wearer, event);
+                }
             }
         } catch (Exception ignored) {
         }

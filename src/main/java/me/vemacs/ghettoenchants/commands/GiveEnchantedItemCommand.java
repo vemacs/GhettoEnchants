@@ -12,6 +12,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+import java.util.Map;
+
 public class GiveEnchantedItemCommand implements CommandExecutor {
     private EnchantUtils utils;
 
@@ -42,8 +45,16 @@ public class GiveEnchantedItemCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + e.getMessage());
             return true;
         }
-        p.getInventory().addItem(is);
+        safeAddItem(p, is);
         sender.sendMessage(ChatColor.GREEN + "The " + type + " has been delivered to " + p.getName());
         return true;
+    }
+
+    public static void safeAddItem(Player p, ItemStack... items) {
+        Map<Integer, ItemStack> toDrop = p.getInventory()
+                .addItem(items);
+        for (Map.Entry<Integer, ItemStack> entry : toDrop.entrySet()) {
+            p.getWorld().dropItemNaturally(p.getLocation(), entry.getValue());
+        }
     }
 }
