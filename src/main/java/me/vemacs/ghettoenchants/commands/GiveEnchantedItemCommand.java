@@ -1,7 +1,6 @@
 package me.vemacs.ghettoenchants.commands;
 
 import me.vemacs.ghettoenchants.EnchantsPlugin;
-import me.vemacs.ghettoenchants.utils.EnchantParser;
 import me.vemacs.ghettoenchants.utils.EnchantUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,7 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
 import java.util.Map;
 
 public class GiveEnchantedItemCommand implements CommandExecutor {

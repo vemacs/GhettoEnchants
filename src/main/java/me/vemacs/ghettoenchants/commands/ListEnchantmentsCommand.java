@@ -3,7 +3,7 @@ package me.vemacs.ghettoenchants.commands;
 import com.google.common.base.Joiner;
 import me.vemacs.ghettoenchants.EnchantsPlugin;
 import me.vemacs.ghettoenchants.utils.EnchantUtils;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
